@@ -8,5 +8,7 @@ aiofiles
 passlib
 bcrypt
 python-jose
+fastapi_jwt_auth
+werkzeug
 
 

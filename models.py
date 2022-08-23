@@ -1,4 +1,4 @@
-from email.policy import default
+
 from database import Base
 from sqlalchemy import Column,Integer,String,ForeignKey,DateTime,Boolean,Text
 from sqlalchemy.orm import relationship
@@ -9,11 +9,11 @@ class User(Base):
     id=Column(Integer,primary_key=True,index=True)
     username=Column(String(25),unique=True)
     email=Column(String(80),unique=True)
-    password=Column(Text,nullable=True)
+    password=Column(String,nullable=True)
     is_active=Column(Boolean,default=False)
     is_staff=Column(Boolean,default=False)
     # user_id=Column(Integer,ForeignKey('users.id'))
-    orders= relationship("Order", back_populates="users")
+    orders= relationship("Order", back_populates="user")
 
     def __repr__(self):
         return f'<User {self.username}'
@@ -37,7 +37,7 @@ class Order(Base):
     order_status=Column(ChoiceType(choices=ORDER_STATUSES),default="PENDING")
     pizza_size=Column(ChoiceType(choices=PIZZA_SIZES),default="SMALL")
     user_id=Column(Integer,ForeignKey('user.id'))
-    users=relationship("User", back_populates="orders")
+    user=relationship("User", back_populates="orders")
 
     def __repr__(self):
         return f'<Order {self.id}'
